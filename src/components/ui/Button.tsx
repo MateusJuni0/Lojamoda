@@ -37,7 +37,8 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
         ref={ref}
         whileHover={!disabled && !loading ? { scale: 1.02, y: -1 } : {}}
         whileTap={!disabled && !loading ? { scale: 0.98, y: 0 } : {}}
-        transition={{ duration: 0.15, ease: [0.4, 0, 0.2, 1] }}
+        transition={{ duration: 0.15, type: 'spring', stiffness: 400, damping: 25 }}
+        style={{ WebkitTapHighlightColor: 'transparent' } as React.CSSProperties}
         disabled={disabled || loading}
         className={cn(
           'relative inline-flex items-center justify-center uppercase font-medium',

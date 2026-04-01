@@ -36,7 +36,7 @@ function EditorialCard({
     e.preventDefault()
     e.stopPropagation()
     addItem(product, 1)
-    addToast({ type: 'cart', message: `${product.name} adicionado ao carrinho!` })
+    addToast({ type: 'cart', message: `${product.name} adicionado ao cesto!` })
   }
 
   const handleWishlist = (e: React.MouseEvent) => {
@@ -92,7 +92,7 @@ function EditorialCard({
             style={{ fontFamily: 'var(--font-ui)' }}
           >
             <ShoppingBag size={11} />
-            {product.inStock ? 'Adicionar' : 'Esgotado'}
+            {product.inStock ? 'Adquirir' : 'Esgotado'}
           </button>
           <button
             onClick={handleWishlist}

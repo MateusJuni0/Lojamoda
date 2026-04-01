@@ -10,10 +10,10 @@ const footerLinks = {
     title: 'Loja',
     links: [
       { label: 'Roupas', href: '/roupas' },
-      { label: 'Relógios', href: '/relogios' },
-      { label: 'Acessórios', href: '/acessorios' },
-      { label: 'Coleções', href: '/colecoes' },
-      { label: 'Promoções', href: '/promocoes' },
+      { label: 'Relogios', href: '/relogios' },
+      { label: 'Acessorios', href: '/acessorios' },
+      { label: 'Colecoes', href: '/colecoes' },
+      { label: 'Privilegios', href: '/privilegios' },
     ],
   },
   conta: {
@@ -29,7 +29,7 @@ const footerLinks = {
     title: 'Ajuda',
     links: [
       { label: 'FAQ', href: '/ajuda/faq' },
-      { label: 'Envios e Devoluções', href: '/ajuda/envios' },
+      { label: 'Envios e Devolucoes', href: '/ajuda/envios' },
       { label: 'Guia de Tamanhos', href: '/ajuda/tamanhos' },
       { label: 'Contacto', href: '/ajuda/contacto' },
     ],
@@ -37,7 +37,7 @@ const footerLinks = {
   empresa: {
     title: 'Empresa',
     links: [
-      { label: 'Sobre Nós', href: '/sobre' },
+      { label: 'Sobre Nos', href: '/sobre' },
       { label: 'Sustentabilidade', href: '/sustentabilidade' },
       { label: 'Privacidade', href: '/privacidade' },
       { label: 'Termos de Uso', href: '/termos' },
@@ -52,7 +52,6 @@ const socials = [
   { icon: Facebook, href: 'https://facebook.com', label: 'Facebook' },
 ]
 
-// SVG logos de pagamento inline
 function VisaLogo() {
   return (
     <svg viewBox="0 0 48 16" width="38" height="13" aria-label="Visa" className="opacity-50 hover:opacity-80 transition-opacity">
@@ -117,7 +116,7 @@ export default function Footer() {
                 Acesso Antecipado Exclusivo
               </h3>
               <p className="text-[#F5F5F0]/50 text-sm">
-                Receba novas coleções e ofertas privadas antes de todos.
+                Receba novas colecoes e ofertas privadas antes de todos.
               </p>
             </motion.div>
             <motion.form
@@ -148,10 +147,10 @@ export default function Footer() {
           <div className="col-span-2 md:col-span-4 lg:col-span-1">
             <Link href="/" className="inline-block mb-4">
               <span className="font-display text-xl font-bold tracking-widest text-[#F5F5F0]">NOIR</span>
-              <span className="font-display text-xl font-light tracking-widest text-[#D4AF37]">&nbsp;ÉLITE</span>
+              <span className="font-display text-xl font-light tracking-widest text-[#D4AF37]">&nbsp;ELITE</span>
             </Link>
             <p className="text-[#F5F5F0]/40 text-sm leading-relaxed mb-6 max-w-xs">
-              Moda de luxo curada para quem não transige na qualidade.
+              Moda de luxo curada para quem nao transige na qualidade.
             </p>
             <div className="flex gap-3">
               {socials.map(({ icon: Icon, href, label }) => (
@@ -195,7 +194,6 @@ export default function Footer() {
       {/* Trust seals */}
       <div className="border-t border-white/5">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-5 flex flex-col sm:flex-row items-center justify-between gap-4">
-          {/* Logos de pagamento */}
           <div className="flex items-center gap-3 flex-wrap justify-center sm:justify-start">
             <VisaLogo />
             <MastercardLogo />
@@ -203,7 +201,6 @@ export default function Footer() {
             <PayPalLogo />
             <ApplePayLogo />
           </div>
-          {/* Selos de segurança */}
           <div className="flex items-center gap-3">
             <div className="flex items-center gap-1.5 border border-white/10 rounded-md px-2.5 py-1">
               <svg viewBox="0 0 14 14" width="12" height="12" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -227,7 +224,7 @@ export default function Footer() {
       <div className="border-t border-white/5">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex flex-col sm:flex-row items-center justify-center gap-2">
           <p className="text-[#F5F5F0]/25 text-xs text-center">
-            © 2025 Noir Élite. Todos os direitos reservados. NIF: 123456789
+            &copy; 2025 Noir Elite. Todos os direitos reservados. NIF: 123456789
           </p>
         </div>
       </div>

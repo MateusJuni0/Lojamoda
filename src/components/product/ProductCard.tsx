@@ -31,7 +31,7 @@ export default function ProductCard({ product, priority = false }: ProductCardPr
     e.preventDefault()
     e.stopPropagation()
     addItem(product, 1)
-    addToast({ type: 'cart', message: `${product.name} adicionado ao carrinho!` })
+    addToast({ type: 'cart', message: `${product.name} adicionado ao cesto!` })
   }
 
   const handleWishlist = (e: React.MouseEvent) => {
@@ -86,7 +86,7 @@ export default function ProductCard({ product, priority = false }: ProductCardPr
               )}
             >
               <ShoppingBag size={13} />
-              {product.inStock ? 'Adicionar' : 'Esgotado'}
+              {product.inStock ? 'Adquirir' : 'Esgotado'}
             </button>
             <Link href={`/produto/${product.slug}`} onClick={(e) => e.stopPropagation()}
               className="p-2.5 rounded-lg bg-white/10 text-[#F5F5F0] hover:bg-white/20 transition-colors" aria-label="Ver produto">

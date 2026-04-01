@@ -14,14 +14,14 @@ export function SkeletonCard() {
   return (
     <div className="flex flex-col gap-3">
       <Skeleton className="aspect-[3/4] w-full" />
-      <Skeleton className="h-3 w-3/4" />
-      <Skeleton className="h-3 w-1/2" />
-      <Skeleton className="h-4 w-1/3" />
+      <Skeleton className="h-2.5 w-16" />
+      <Skeleton className="h-4 w-3/4" />
+      <Skeleton className="h-3 w-1/3" />
     </div>
   )
 }
 
-export function SkeletonProductGrid({ count = 8 }: { count?: number }) {
+export function SkeletonProductGrid({ count = 6 }: { count?: number }) {
   return (
     <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6">
       {Array.from({ length: count }).map((_, i) => (

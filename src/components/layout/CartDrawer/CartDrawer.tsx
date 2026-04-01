@@ -4,18 +4,24 @@ import { useRef } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
 import { motion, AnimatePresence, useDragControls } from 'framer-motion'
-import { X, ShoppingBag, Plus, Minus, Trash2 } from 'lucide-react'
+import { X, ShoppingBag, Plus, Minus, Trash2, Truck } from 'lucide-react'
 import { useCartStore } from '@/store/cartStore'
 import { useUIStore } from '@/store/uiStore'
 import { cartDrawerVariants, backdropVariants } from '@/lib/animations'
 import { formatPrice } from '@/lib/utils'
 
+const FREE_SHIPPING_THRESHOLD = 150
+
 export default function CartDrawer() {
-  const { cartOpen, openCart: _openCart, closeCart } = useUIStore()
+  const { cartOpen, closeCart } = useUIStore()
   const { items, updateQuantity, removeItem, total } = useCartStore()
   const dragControls = useDragControls()
   const overlayRef = useRef<HTMLDivElement>(null)
   const isEmpty = items.length === 0
+  const subtotal = total()
+  const remaining = Math.max(0, FREE_SHIPPING_THRESHOLD - subtotal)
+  const progress = Math.min(1, subtotal / FREE_SHIPPING_THRESHOLD)
+  const freeShipping = remaining === 0
 
   return (
     <AnimatePresence>
@@ -33,19 +39,45 @@ export default function CartDrawer() {
             <div className="flex items-center justify-between px-6 py-5 border-b border-white/10">
               <div className="flex items-center gap-2">
                 <ShoppingBag size={20} className="text-[#D4AF37]" />
-                <h2 className="font-display text-lg font-semibold text-[#F5F5F0]">Carrinho ({items.length})</h2>
+                <h2 className="font-display text-lg font-semibold text-[#F5F5F0]">Cesto ({items.length})</h2>
               </div>
-              <button onClick={() => closeCart()} className="p-2 text-[#F5F5F0]/50 hover:text-[#F5F5F0] transition-colors rounded-lg hover:bg-white/5" aria-label="Fechar carrinho">
+              <button onClick={() => closeCart()} className="p-2 text-[#F5F5F0]/50 hover:text-[#F5F5F0] transition-colors rounded-lg hover:bg-white/5" aria-label="Fechar cesto">
                 <X size={20} />
               </button>
             </div>
+
+            {/* Free Shipping Thermometer */}
+            {!isEmpty && (
+              <div className="px-6 py-4 border-b border-white/5">
+                <div className="flex items-center gap-2 mb-2">
+                  <Truck size={14} className={freeShipping ? 'text-[#D4AF37]' : 'text-[#F5F5F0]/40'} />
+                  {freeShipping ? (
+                    <p className="text-[#D4AF37] text-xs font-semibold tracking-wide">
+                      Parabens — envio gratuito incluido &#10003;
+                    </p>
+                  ) : (
+                    <p className="text-[#F5F5F0]/50 text-xs">
+                      Faltam <span className="text-[#D4AF37] font-semibold">{formatPrice(remaining)}</span> para envio gratuito
+                    </p>
+                  )}
+                </div>
+                <div className="h-1.5 bg-white/5 rounded-full overflow-hidden">
+                  <motion.div
+                    initial={{ width: 0 }}
+                    animate={{ width: `${progress * 100}%` }}
+                    transition={{ duration: 0.8, ease: [0.25, 0.1, 0.25, 1] }}
+                    className={`h-full rounded-full ${freeShipping ? 'bg-[#D4AF37]' : 'bg-[#D4AF37]/60'}`}
+                  />
+                </div>
+              </div>
+            )}
 
             <div className="flex-1 overflow-y-auto px-6 py-4 space-y-4">
               {isEmpty ? (
                 <div className="flex flex-col items-center justify-center h-full gap-4 text-center">
                   <ShoppingBag size={48} className="text-white/10" />
-                  <p className="text-[#F5F5F0]/40 text-sm">O seu carrinho está vazio.</p>
-                  <button onClick={() => closeCart()} className="text-[#D4AF37] text-sm hover:underline">Continuar a comprar</button>
+                  <p className="text-[#F5F5F0]/40 text-sm">O seu cesto esta vazio.</p>
+                  <button onClick={() => closeCart()} className="text-[#D4AF37] text-sm hover:underline">Continuar a explorar</button>
                 </div>
               ) : (
                 items.map((item) => (
@@ -83,16 +115,16 @@ export default function CartDrawer() {
               <div className="px-6 py-5 border-t border-white/10 space-y-4">
                 <div className="flex items-center justify-between">
                   <span className="text-[#F5F5F0]/60 text-sm">Subtotal</span>
-                  <span className="text-[#F5F5F0] font-semibold">{formatPrice(total())}</span>
+                  <span className="text-[#F5F5F0] font-semibold">{formatPrice(subtotal)}</span>
                 </div>
                 <p className="text-[#F5F5F0]/30 text-xs">Envio e impostos calculados no checkout.</p>
                 <Link href="/checkout" onClick={() => closeCart()}
                   className="block w-full py-3.5 bg-[#D4AF37] text-[#0A0A0A] text-center text-sm font-bold tracking-widest uppercase rounded-xl hover:bg-[#C9A430] transition-colors">
-                  Finalizar Compra
+                  Finalizar Encomenda
                 </Link>
                 <Link href="/carrinho" onClick={() => closeCart()}
                   className="block w-full py-3 border border-white/20 text-[#F5F5F0]/70 text-center text-sm tracking-wide rounded-xl hover:border-white/40 hover:text-[#F5F5F0] transition-colors">
-                  Ver Carrinho
+                  Ver Cesto
                 </Link>
               </div>
             )}

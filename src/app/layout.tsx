@@ -5,6 +5,7 @@ import Header from '@/components/layout/Header/Header'
 import Footer from '@/components/layout/Footer/Footer'
 import CartDrawer from '@/components/layout/CartDrawer/CartDrawer'
 import { ToastContainer } from '@/components/ui/Toast'
+import MagicSearch from '@/components/ui/MagicSearch'
 
 const cormorant = Cormorant_Garamond({
   subsets: ['latin'],
@@ -59,6 +60,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <body className="bg-[#0A0A0A] text-[#F5F5F0] font-sans antialiased">
         <Header />
         <CartDrawer />
+        <MagicSearch />
         <ToastContainer />
         <main className="min-h-screen">{children}</main>
         <Footer />

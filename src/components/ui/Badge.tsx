@@ -20,7 +20,7 @@ const variantClasses: Record<BadgeVariant, string> = {
 export function Badge({ variant, label, className }: BadgeProps) {
   const defaultLabels: Record<BadgeVariant, string> = {
     new:        'NOVO',
-    sale:       'SALE',
+    sale:       'ARQUIVO',
     percent:    '',
     sold:       'ESGOTADO',
     limit:      'ÚLTIMAS PEÇAS',

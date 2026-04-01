@@ -2,19 +2,56 @@
 
 import { useState, useEffect, useRef } from 'react'
 import Link from 'next/link'
+import Image from 'next/image'
 import { motion, AnimatePresence, useScroll, useTransform } from 'framer-motion'
-import { ShoppingBag, Heart, Search, Menu, X, ChevronDown } from 'lucide-react'
+import { ShoppingBag, Heart, Search, Menu, X, ChevronDown, MessageCircle } from 'lucide-react'
 import { useCartStore } from '@/store/cartStore'
 import { useWishlistStore } from '@/store/wishlistStore'
 import { useUIStore } from '@/store/uiStore'
 import { mobileNavVariants } from '@/lib/animations'
 import { cn } from '@/lib/utils'
 
-const navLinks = [
-  { label: 'Roupas',     href: '/roupas',    sub: ['Camisas', 'Blazers', 'Casacos', 'Calças', 'Vestidos'] },
-  { label: 'Relógios',   href: '/relogios',  sub: ['Cronógrafos', 'Dress Watch', 'Sport', 'Skeleton', 'GMT'] },
-  { label: 'Acessórios', href: '/acessorios', sub: ['Colares', 'Pulseiras', 'Anéis', 'Brincos', 'Cintos'] },
-  { label: 'Coleções',   href: '/colecoes',   sub: [] },
+interface MegaMenuData {
+  label: string
+  href: string
+  sub: string[]
+  editorial?: { image: string; title: string; cta: string }
+  extra?: { label: string; href: string; highlight?: boolean }
+}
+
+const navLinks: MegaMenuData[] = [
+  {
+    label: 'Roupas',
+    href: '/roupas',
+    sub: ['Camisas', 'Blazers', 'Casacos', 'Calcas', 'Vestidos'],
+    editorial: {
+      image: 'https://images.unsplash.com/photo-1558618666-fcd25c85f82e?w=600&q=80',
+      title: 'Colecao Primavera 2026',
+      cta: 'Descobrir',
+    },
+  },
+  {
+    label: 'Relogios',
+    href: '/relogios',
+    sub: ['Cronografos', 'Dress Watch', 'Sport', 'Skeleton', 'GMT'],
+    editorial: {
+      image: 'https://images.unsplash.com/photo-1523170335258-f5ed11844a49?w=600&q=80',
+      title: 'Alta Relojoaria',
+      cta: 'Explorar',
+    },
+    extra: { label: 'Consultor de Relogios', href: 'https://wa.me/351000000000?text=Ola,%20gostaria%20de%20falar%20com%20um%20consultor%20de%20relogios', highlight: true },
+  },
+  {
+    label: 'Acessorios',
+    href: '/acessorios',
+    sub: ['Colares', 'Pulseiras', 'Aneis', 'Brincos', 'Cintos'],
+    editorial: {
+      image: 'https://images.unsplash.com/photo-1611591437281-460bfbe1220a?w=600&q=80',
+      title: 'Detalhes que Definem',
+      cta: 'Ver Colecao',
+    },
+  },
+  { label: 'Colecoes', href: '/colecoes', sub: [] },
 ]
 
 export default function Header() {
@@ -26,7 +63,7 @@ export default function Header() {
 
   const itemCount = useCartStore((s) => s.itemCount())
   const wishlistCount = useWishlistStore((s) => s.items.length)
-  const { cartOpen, toggleCart, mobileNavOpen, toggleMobileNav, openSearch } = useUIStore()
+  const { toggleCart, mobileNavOpen, toggleMobileNav, openSearch } = useUIStore()
 
   useEffect(() => {
     const unsub = scrollY.on('change', (y) => setScrolled(y > 20))
@@ -50,14 +87,14 @@ export default function Header() {
       )}
     >
       <div className="border-b border-white/5 py-1.5 text-center text-xs tracking-widest text-white/50 hidden md:block">
-        ENVIO GRATUITO EM COMPRAS ACIMA DE €150 · DEVOLUÇÃO GRATUITA EM 30 DIAS
+        ENVIO GRATUITO EM COMPRAS ACIMA DE &euro;150 &middot; DEVOLUCAO GRATUITA EM 30 DIAS
       </div>
 
       <nav className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16 md:h-20">
           <Link href="/" className="flex-shrink-0 group">
             <span className="font-display text-xl md:text-2xl font-bold tracking-widest text-[#F5F5F0] group-hover:text-[#D4AF37] transition-colors duration-300">NOIR</span>
-            <span className="font-display text-xl md:text-2xl font-light tracking-widest text-[#D4AF37]">&nbsp;ÉLITE</span>
+            <span className="font-display text-xl md:text-2xl font-light tracking-widest text-[#D4AF37]">&nbsp;ELITE</span>
           </Link>
 
           <div className="hidden md:flex items-center gap-8">
@@ -73,16 +110,76 @@ export default function Header() {
                     <ChevronDown size={14} className={cn('transition-transform duration-200', activeDropdown === link.label && 'rotate-180')} />
                   )}
                 </Link>
+
+                {/* Mega Menu */}
                 <AnimatePresence>
                   {activeDropdown === link.label && link.sub.length > 0 && (
-                    <motion.div initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: 8 }} transition={{ duration: 0.2 }}
-                      className="absolute top-full left-1/2 -translate-x-1/2 mt-3 glass-card rounded-xl p-4 min-w-40">
-                      {link.sub.map((sub) => (
-                        <Link key={sub} href={`${link.href}?categoria=${sub.toLowerCase()}`}
-                          className="block py-1.5 px-2 text-sm text-[#F5F5F0]/70 hover:text-[#D4AF37] transition-colors rounded">
-                          {sub}
-                        </Link>
-                      ))}
+                    <motion.div
+                      initial={{ opacity: 0, y: 8 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      exit={{ opacity: 0, y: 8 }}
+                      transition={{ duration: 0.3, ease: [0.25, 0.1, 0.25, 1] }}
+                      className="absolute top-full left-1/2 -translate-x-1/2 mt-3 w-[640px] header-glass rounded-2xl p-0 overflow-hidden border border-white/10 shadow-2xl"
+                    >
+                      <div className="flex">
+                        {/* Left: Editorial image */}
+                        {link.editorial && (
+                          <div className="w-[40%] relative overflow-hidden">
+                            <Image
+                              src={link.editorial.image}
+                              alt={link.editorial.title}
+                              fill
+                              className="object-cover"
+                              sizes="260px"
+                            />
+                            <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent" />
+                            <div className="absolute bottom-4 left-4 right-4">
+                              <p className="text-[#D4AF37] text-[9px] tracking-[0.3em] uppercase mb-1">{link.label}</p>
+                              <p className="text-white font-display text-lg font-semibold leading-tight mb-2">{link.editorial.title}</p>
+                              <Link
+                                href={link.href}
+                                className="text-white/80 text-xs tracking-widest uppercase hover:text-[#D4AF37] transition-colors"
+                              >
+                                {link.editorial.cta} &rarr;
+                              </Link>
+                            </div>
+                          </div>
+                        )}
+
+                        {/* Right: Category links */}
+                        <div className={cn('flex-1 p-6', link.editorial ? 'w-[60%]' : 'w-full')}>
+                          <p className="text-[#D4AF37] text-[9px] tracking-[0.3em] uppercase mb-4">Categorias</p>
+                          <div className="space-y-1">
+                            {link.sub.map((sub) => (
+                              <Link
+                                key={sub}
+                                href={`${link.href}?categoria=${sub.toLowerCase()}`}
+                                className="block py-2 px-3 text-sm text-[#F5F5F0]/70 hover:text-[#D4AF37] hover:bg-white/5 transition-colors rounded-lg"
+                              >
+                                {sub}
+                              </Link>
+                            ))}
+                          </div>
+                          {link.extra && (
+                            <div className="mt-4 pt-4 border-t border-white/10">
+                              <a
+                                href={link.extra.href}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className={cn(
+                                  'flex items-center gap-2 py-2 px-3 text-sm rounded-lg transition-colors',
+                                  link.extra.highlight
+                                    ? 'text-[#D4AF37] hover:bg-[#D4AF37]/10'
+                                    : 'text-[#F5F5F0]/70 hover:text-[#F5F5F0]'
+                                )}
+                              >
+                                <MessageCircle size={14} />
+                                {link.extra.label}
+                              </a>
+                            </div>
+                          )}
+                        </div>
+                      </div>
                     </motion.div>
                   )}
                 </AnimatePresence>
@@ -102,7 +199,7 @@ export default function Header() {
                 </span>
               )}
             </Link>
-            <button onClick={() => toggleCart()} className="relative p-2 text-[#F5F5F0]/70 hover:text-[#F5F5F0] transition-colors" aria-label="Carrinho">
+            <button onClick={() => toggleCart()} className="relative p-2 text-[#F5F5F0]/70 hover:text-[#F5F5F0] transition-colors" aria-label="Cesto">
               <ShoppingBag size={20} />
               {itemCount > 0 && (
                 <motion.span key={itemCount} initial={{ scale: 0 }} animate={{ scale: 1 }}

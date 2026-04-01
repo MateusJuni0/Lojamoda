@@ -19,16 +19,16 @@ export default function CartPage() {
       <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
         <motion.h1 initial="hidden" animate="visible" variants={fadeUpVariant}
           className="font-display text-4xl font-bold text-[#F5F5F0] mb-10">
-          Carrinho
+          Cesto
         </motion.h1>
 
         {isEmpty ? (
           <div className="flex flex-col items-center justify-center py-24 gap-6 text-center">
             <ShoppingBag size={64} className="text-white/10" />
-            <p className="text-[#F5F5F0]/30 text-xl">O seu carrinho está vazio.</p>
+            <p className="text-[#F5F5F0]/30 text-xl">O seu cesto esta vazio.</p>
             <Link href="/roupas"
               className="px-8 py-3 bg-[#D4AF37] text-[#0A0A0A] text-sm font-bold tracking-widest uppercase rounded-xl hover:bg-[#C9A430] transition-colors">
-              Continuar a Comprar
+              Continuar a Explorar
             </Link>
           </div>
         ) : (
@@ -62,7 +62,7 @@ export default function CartPage() {
                 </motion.div>
               ))}
               <button onClick={() => clearCart()} className="text-[#F5F5F0]/30 hover:text-red-400 text-xs transition-colors mt-2">
-                Limpar carrinho
+                Limpar cesto
               </button>
             </motion.div>
 
@@ -85,7 +85,7 @@ export default function CartPage() {
               </div>
               <Link href="/checkout"
                 className="flex items-center justify-center gap-2 w-full py-4 bg-[#D4AF37] text-[#0A0A0A] text-sm font-bold tracking-widest uppercase rounded-xl hover:bg-[#C9A430] transition-colors">
-                Finalizar Compra <ArrowRight size={15} />
+                Finalizar Encomenda <ArrowRight size={15} />
               </Link>
             </motion.div>
           </div>

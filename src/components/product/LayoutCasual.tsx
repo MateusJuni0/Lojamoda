@@ -3,7 +3,7 @@
 import { useState } from 'react'
 import Image from 'next/image'
 import { motion, AnimatePresence } from 'framer-motion'
-import { Heart, ShoppingBag, Share2, ChevronDown, ChevronLeft, ChevronRight, ShieldCheck, Truck, RotateCcw } from 'lucide-react'
+import { Heart, ShoppingBag, Share2, ChevronDown, ChevronLeft, ChevronRight, ShieldCheck, Truck, RotateCcw, Package, Gift, FileText } from 'lucide-react'
 import { type ApparelProduct, type AccessoryProduct, type SizeVariant } from '@/types/product'
 import { useCartStore } from '@/store/cartStore'
 import { useWishlistStore } from '@/store/wishlistStore'
@@ -39,7 +39,7 @@ export default function LayoutCasual({ product }: LayoutCasualProps) {
       return
     }
     addItem(product, 1, selectedColor || undefined, selectedSize ?? undefined)
-    addToast({ type: 'cart', message: `${product.name} adicionado ao carrinho!` })
+    addToast({ type: 'cart', message: `${product.name} adicionado ao cesto!` })
     openCart()
   }
 
@@ -54,14 +54,14 @@ export default function LayoutCasual({ product }: LayoutCasualProps) {
         ]
       : [
           { label: 'Material', value: product.material },
-          ...(product.dimensions ? [{ label: 'Dimensões', value: product.dimensions }] : []),
+          ...(product.dimensions ? [{ label: 'Dimensoes', value: product.dimensions }] : []),
           ...(product.weight ? [{ label: 'Peso', value: product.weight }] : []),
         ]
 
   const accordionSections = [
     { key: 'detalhes', label: 'Detalhes' },
-    { key: 'descricao', label: 'Descrição' },
-    { key: 'envio', label: 'Envio e Devoluções' },
+    { key: 'descricao', label: 'Descricao' },
+    { key: 'envio', label: 'Envio e Devolucoes' },
   ]
 
   return (
@@ -106,7 +106,7 @@ export default function LayoutCasual({ product }: LayoutCasualProps) {
             )}
           </motion.div>
 
-          {/* Informação do produto */}
+          {/* Informacao do produto */}
           <motion.div variants={staggerContainerCasual} initial="hidden" animate="visible" className="space-y-6">
             <motion.div variants={fadeUpVariant}>
               <p className="text-[#D4AF37] text-xs tracking-widest uppercase mb-1">{product.category}</p>
@@ -159,14 +159,20 @@ export default function LayoutCasual({ product }: LayoutCasualProps) {
               </motion.div>
             )}
 
-            {/* Ações */}
+            {/* Acoes */}
             <motion.div variants={fadeUpVariant} className="flex gap-3 pt-2">
-              <button onClick={handleAddToCart} disabled={!product.inStock}
+              <motion.button
+                onClick={handleAddToCart}
+                disabled={!product.inStock}
+                whileTap={product.inStock ? { scale: 0.98 } : {}}
+                transition={{ duration: 0.15, type: 'spring', stiffness: 400, damping: 25 }}
+                style={{ WebkitTapHighlightColor: 'transparent' }}
                 className={cn('flex-1 flex items-center justify-center gap-2 py-4 rounded-xl text-sm font-bold tracking-widest uppercase transition-colors',
-                  product.inStock ? 'bg-[#D4AF37] text-[#0A0A0A] hover:bg-[#C9A430]' : 'bg-white/10 text-white/30 cursor-not-allowed')}>
+                  product.inStock ? 'bg-[#D4AF37] text-[#0A0A0A] hover:bg-[#C9A430]' : 'bg-white/10 text-white/30 cursor-not-allowed')}
+              >
                 <ShoppingBag size={16} />
-                {product.inStock ? 'Adicionar ao Carrinho' : 'Esgotado'}
-              </button>
+                {product.inStock ? 'Adicionar ao Cesto' : 'Esgotado'}
+              </motion.button>
               <button onClick={() => { toggleWishlist(product.id); addToast({ type: wished ? 'info' : 'success', message: wished ? 'Removido dos favoritos' : 'Adicionado aos favoritos!' }) }}
                 className={cn('p-4 rounded-xl border transition-colors', wished ? 'border-red-400/50 text-red-400' : 'border-white/15 text-[#F5F5F0]/50 hover:border-white/30 hover:text-[#F5F5F0]')}
                 aria-label="Favoritos">
@@ -188,13 +194,29 @@ export default function LayoutCasual({ product }: LayoutCasualProps) {
               <span className="text-white/10">|</span>
               <span className="flex items-center gap-1.5">
                 <Truck size={13} className="text-[#D4AF37]" />
-                Entrega 2–4 dias
+                Entrega 2-4 dias
               </span>
               <span className="text-white/10">|</span>
               <span className="flex items-center gap-1.5">
                 <RotateCcw size={13} className="text-[#D4AF37]" />
-                30 dias grátis
+                30 dias gratis
               </span>
+            </motion.div>
+
+            {/* Unboxing Promise (#11) */}
+            <motion.div variants={fadeUpVariant}
+              className="flex items-start gap-4 py-4 px-5 rounded-xl bg-white/[0.02] border border-white/[0.06]">
+              <div className="flex items-center gap-2 flex-shrink-0 pt-0.5">
+                <Package size={16} className="text-[#D4AF37]" />
+                <Gift size={14} className="text-[#D4AF37]/60" />
+                <FileText size={14} className="text-[#D4AF37]/60" />
+              </div>
+              <div>
+                <p className="text-[#D4AF37] text-xs tracking-widest uppercase mb-1">Embalagem Noir Elite</p>
+                <p className="text-[#F5F5F0]/50 text-xs leading-relaxed">
+                  Cada peca e embalada a mao em caixa preta mate com fita de cetim e cartao personalizado.
+                </p>
+              </div>
             </motion.div>
 
             {/* Accordion */}
@@ -220,29 +242,28 @@ export default function LayoutCasual({ product }: LayoutCasualProps) {
                           {section.key === 'envio' && (
                             <div className="space-y-2.5">
                               <div className="flex gap-2">
-                                <span className="w-4 flex-shrink-0">📦</span>
+                                <span className="w-4 flex-shrink-0">&#128230;</span>
                                 <div>
                                   <p className="text-[#F5F5F0]/70 font-medium">Envio Standard</p>
-                                  <p className="text-[#F5F5F0]/40">2–4 dias úteis · Gratuito acima de €69 · €4,99 abaixo</p>
+                                  <p className="text-[#F5F5F0]/40">2-4 dias uteis &middot; Gratuito acima de &euro;69 &middot; &euro;4,99 abaixo</p>
                                 </div>
                               </div>
                               <div className="flex gap-2">
-                                <span className="w-4 flex-shrink-0">⚡</span>
+                                <span className="w-4 flex-shrink-0">&#9889;</span>
                                 <div>
                                   <p className="text-[#F5F5F0]/70 font-medium">Envio Expresso</p>
-                                  <p className="text-[#F5F5F0]/40">24h · €9,99</p>
+                                  <p className="text-[#F5F5F0]/40">24h &middot; &euro;9,99</p>
                                 </div>
                               </div>
-
                               <div className="flex gap-2">
-                                <span className="w-4 flex-shrink-0">↩️</span>
+                                <span className="w-4 flex-shrink-0">&#8617;&#65039;</span>
                                 <div>
-                                  <p className="text-[#F5F5F0]/70 font-medium">Devoluções</p>
-                                  <p className="text-[#F5F5F0]/40">30 dias · Gratuitas · Sem justificação</p>
+                                  <p className="text-[#F5F5F0]/70 font-medium">Devolucoes</p>
+                                  <p className="text-[#F5F5F0]/40">30 dias &middot; Gratuitas &middot; Sem justificacao</p>
                                 </div>
                               </div>
                               <div className="flex gap-2">
-                                <span className="w-4 flex-shrink-0">🔄</span>
+                                <span className="w-4 flex-shrink-0">&#128260;</span>
                                 <div>
                                   <p className="text-[#F5F5F0]/70 font-medium">Troca de Tamanho</p>
                                   <p className="text-[#F5F5F0]/40">Gratuita na primeira troca</p>

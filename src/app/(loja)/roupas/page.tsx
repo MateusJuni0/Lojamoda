@@ -13,7 +13,7 @@ const filterOptions = [
   { label: 'Casacos', value: 'casacos' },
   { label: 'Calças', value: 'calcas' },
   { label: 'Vestidos', value: 'vestidos' },
-  { label: 'Em Saldo', value: 'sale' },
+  { label: 'Arquivo', value: 'sale' },
   { label: 'Novidades', value: 'new' },
 ]
 

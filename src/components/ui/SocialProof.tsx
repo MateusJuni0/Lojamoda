@@ -32,7 +32,7 @@ const NAMES = [
 
 const EVENTS = [
   { action: 'acabou de comprar', emoji: '👤' },
-  { action: 'adicionou ao carrinho', emoji: '👤' },
+  { action: 'adicionou ao cesto', emoji: '👤' },
   { action: 'acabou de comprar', emoji: '👤' },
 ]
 
