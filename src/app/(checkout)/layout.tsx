@@ -1,5 +1,10 @@
+import type { Metadata } from 'next'
 import Link from 'next/link'
 import { ShieldCheck, RotateCcw, Lock } from 'lucide-react'
+
+export const metadata: Metadata = {
+  title: 'Checkout | Noir Élite',
+}
 
 export default function CheckoutLayout({ children }: { children: React.ReactNode }) {
   return (
