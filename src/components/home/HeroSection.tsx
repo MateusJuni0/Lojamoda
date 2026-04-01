@@ -4,7 +4,7 @@ import { useRef } from 'react'
 import Link from 'next/link'
 import { motion, useScroll, useTransform } from 'framer-motion'
 import { ArrowRight, ChevronDown } from 'lucide-react'
-import { fadeUpVariant, staggerContainerCasual } from '@/lib/animations'
+import { fadeUpVariant, staggerContainerLuxury } from '@/lib/animations'
 
 export default function HeroSection() {
   const containerRef = useRef<HTMLDivElement>(null)
@@ -33,30 +33,37 @@ export default function HeroSection() {
         className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full"
       >
         <motion.div
-          variants={staggerContainerCasual}
+          variants={staggerContainerLuxury}
           initial="hidden"
           animate="visible"
           className="max-w-3xl"
         >
           <motion.p
             variants={fadeUpVariant}
-            className="text-[#D4AF37] text-xs tracking-[0.3em] uppercase font-medium mb-6"
+            className="text-[#D4AF37] text-[10px] tracking-[0.4em] uppercase mb-8"
+            style={{ fontFamily: 'var(--font-ui)' }}
           >
             Nova Coleção · Primavera 2026
           </motion.p>
 
           <motion.h1
             variants={fadeUpVariant}
-            className="font-display text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-bold text-[#F5F5F0] leading-[0.95] mb-6"
+            className="text-[#F5F5F0] leading-[0.9] mb-8 uppercase"
+            style={{
+              fontFamily: 'var(--font-editorial)',
+              fontWeight: 300,
+              fontSize: 'var(--font-size-hero)',
+              letterSpacing: '0.1em',
+            }}
           >
-            Veste o
-            <br />
+            Veste o<br />
             <span className="text-[#D4AF37]">Extraordinário</span>
           </motion.h1>
 
           <motion.p
             variants={fadeUpVariant}
-            className="text-[#F5F5F0]/60 text-lg md:text-xl leading-relaxed mb-10 max-w-xl"
+            className="text-[#F5F5F0]/60 text-base md:text-lg leading-relaxed mb-10 max-w-xl tracking-wide"
+            style={{ fontFamily: 'var(--font-ui)', fontWeight: 300 }}
           >
             Roupas, relógios e acessórios de luxo. Curados com rigor para quem não transige na excelência.
           </motion.p>

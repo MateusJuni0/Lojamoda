@@ -17,13 +17,25 @@ export const metadata: Metadata = {
 export default function HomePage() {
   return (
     <>
+      {/* Hero — dark (impacto) */}
       <HeroSection />
       <TrustBar />
-      <CategoryGrid />
-      <FeaturedProducts />
-      <EditorialBanner />
+
+      {/* Roupas e categorias — Alabaster editorial */}
+      <div className="theme-editorial bg-[var(--background)]">
+        <CategoryGrid />
+        <FeaturedProducts />
+        <EditorialBanner />
+      </div>
+
+      {/* Relógios — dark */}
       <WatchesSection />
-      <AccessoriesSection />
+
+      {/* Acessórios — Alabaster editorial */}
+      <div className="theme-editorial bg-[var(--background)]">
+        <AccessoriesSection />
+      </div>
+
       <NewsletterCTA />
     </>
   )

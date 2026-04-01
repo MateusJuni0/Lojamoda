@@ -21,11 +21,13 @@ export default function RoupasPage() {
   const products = getProductsByCategory('roupas')
 
   return (
-    <PLPClient
-      products={products}
-      title="Roupas"
-      description="Do casual refinado ao formal impecável — tecidos que falam por si."
-      filterOptions={filterOptions}
-    />
+    <div className="theme-editorial bg-[var(--background)]">
+      <PLPClient
+        products={products}
+        title="Roupas"
+        description="Do casual refinado ao formal impecável — tecidos que falam por si."
+        filterOptions={filterOptions}
+      />
+    </div>
   )
 }

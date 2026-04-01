@@ -71,7 +71,7 @@ export default function LayoutCasual({ product }: LayoutCasualProps) {
 
           {/* Galeria de imagens */}
           <motion.div variants={staggerContainerCasual} initial="hidden" animate="visible" className="space-y-3">
-            <div className="relative aspect-[3/4] rounded-2xl overflow-hidden bg-white/5 group">
+            <div className="relative aspect-[3/4] overflow-hidden bg-[#111] border border-white/5 group">
               <AnimatePresence mode="wait">
                 <motion.div key={activeImage} initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.3 }} className="absolute inset-0">
                   <Image src={product.images[activeImage] ?? product.images[0] ?? ''} alt={product.name} fill priority
@@ -180,7 +180,7 @@ export default function LayoutCasual({ product }: LayoutCasualProps) {
 
             {/* Trust row */}
             <motion.div variants={fadeUpVariant}
-              className="flex items-center justify-between gap-2 py-3 px-4 rounded-xl bg-white/[0.03] border border-white/[0.08] text-[#F5F5F0]/50 text-xs">
+              className="flex items-center justify-between gap-2 py-3 px-4 rounded-xl bg-[#111] border border-white/10 text-[#F5F5F0]/50 text-xs">
               <span className="flex items-center gap-1.5">
                 <ShieldCheck size={13} className="text-[#D4AF37]" />
                 Compra Segura

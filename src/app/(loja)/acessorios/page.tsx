@@ -21,11 +21,13 @@ export default function AcessoriosPage() {
   const products = getProductsByCategory('acessorios')
 
   return (
-    <PLPClient
-      products={products}
-      title="Acessórios"
-      description="O detalhe que define. Peças que elevam qualquer conjunto a obra de arte."
-      filterOptions={filterOptions}
-    />
+    <div className="theme-editorial bg-[var(--background)]">
+      <PLPClient
+        products={products}
+        title="Acessórios"
+        description="O detalhe que define. Peças que elevam qualquer conjunto a obra de arte."
+        filterOptions={filterOptions}
+      />
+    </div>
   )
 }

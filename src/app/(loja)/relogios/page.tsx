@@ -21,11 +21,13 @@ export default function RelogiosPage() {
   const products = getProductsByCategory('relogios')
 
   return (
-    <PLPClient
-      products={products}
-      title="Relógios"
-      description="Mecanismos que transcendem o tempo. Cada peça, uma obra de engenharia e arte."
-      filterOptions={filterOptions}
-    />
+    <div className="theme-dark bg-[#0A0A0A]">
+      <PLPClient
+        products={products}
+        title="Relógios"
+        description="Mecanismos que transcendem o tempo. Cada peça, uma obra de engenharia e arte."
+        filterOptions={filterOptions}
+      />
+    </div>
   )
 }

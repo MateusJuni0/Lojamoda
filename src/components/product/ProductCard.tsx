@@ -51,13 +51,13 @@ export default function ProductCard({ product, priority = false }: ProductCardPr
       className="group relative"
     >
       <Link href={`/produto/${product.slug}`} className="block">
-        <div className="relative aspect-[3/4] rounded-xl overflow-hidden bg-white/5 mb-3">
+        <div className="relative aspect-[3/4] rounded-none overflow-hidden bg-[var(--surface-elevated,#1A1A1A)] border border-[var(--border,transparent)] mb-3">
           <Image
             src={product.images[imageIndex] ?? product.images[0] ?? ''}
             alt={product.name}
             fill
             sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
-            className={cn('object-cover transition-transform duration-700', hovered ? 'scale-105' : 'scale-100')}
+            className={cn('object-cover transition-opacity duration-700', hovered ? 'opacity-85' : 'opacity-100')}
             priority={priority}
           />
 
@@ -74,7 +74,7 @@ export default function ProductCard({ product, priority = false }: ProductCardPr
           <motion.div
             initial={{ opacity: 0, y: 8 }}
             animate={{ opacity: hovered ? 1 : 0, y: hovered ? 0 : 8 }}
-            transition={{ duration: 0.2 }}
+            transition={{ duration: 0.5, ease: [0.25, 0.1, 0.25, 1] }}
             className="absolute bottom-3 left-3 right-3 flex gap-2"
           >
             <button
@@ -95,17 +95,18 @@ export default function ProductCard({ product, priority = false }: ProductCardPr
           </motion.div>
 
           <button onClick={handleWishlist}
-            className="absolute top-3 right-3 p-2 rounded-full bg-black/30 backdrop-blur-sm text-white/70 hover:text-red-400 transition-colors"
+            className="absolute top-3 right-3 p-2 rounded-full bg-black/60 text-white/70 hover:text-red-400 transition-colors"
             aria-label={wished ? 'Remover dos favoritos' : 'Adicionar aos favoritos'}>
             <Heart size={15} className={cn('transition-colors', wished ? 'fill-red-400 text-red-400' : '')} />
           </button>
         </div>
 
         <div>
-          <p className="text-[#F5F5F0]/50 text-xs tracking-widest uppercase mb-1">{product.category}</p>
-          <h3 className="text-[#F5F5F0] text-sm font-medium leading-snug line-clamp-2 mb-2 group-hover:text-[#D4AF37] transition-colors">{product.name}</h3>
+          <p className="text-[#F5F5F0]/50 text-[9px] tracking-[0.2em] uppercase mb-1" style={{ fontFamily: 'var(--font-ui)' }}>{product.category}</p>
+          <h3 className="text-[#F5F5F0] leading-snug line-clamp-2 mb-2 group-hover:text-[#D4AF37] transition-colors"
+            style={{ fontFamily: 'var(--font-editorial)', fontWeight: 300, letterSpacing: '0.06em', fontSize: '0.95rem' }}>{product.name}</h3>
           <div className="flex items-center gap-2">
-            <span className="text-[#F5F5F0] font-semibold">{formatPrice(product.price)}</span>
+            <span className="text-[#F5F5F0] text-sm" style={{ fontFamily: 'var(--font-ui)' }}>{formatPrice(product.price)}</span>
             {product.comparePrice && (
               <span className="text-[#F5F5F0]/30 text-sm line-through">{formatPrice(product.comparePrice)}</span>
             )}

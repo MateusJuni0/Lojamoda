@@ -35,13 +35,24 @@ export default function WatchesSection() {
           viewport={{ once: true }}
           className="text-center mb-16"
         >
-          <motion.p variants={fadeUpVariant} className="text-[#D4AF37] text-xs tracking-[0.3em] uppercase mb-3">
+          <motion.p variants={fadeUpVariant} className="text-[#D4AF37] text-[10px] tracking-[0.4em] uppercase mb-6"
+            style={{ fontFamily: 'var(--font-ui)' }}>
             Alta Relojoaria
           </motion.p>
-          <motion.h2 variants={fadeUpVariant} className="font-display text-4xl md:text-5xl font-bold text-[#F5F5F0] mb-4">
-            Tempo Elevado à Arte
+          <motion.h2 variants={fadeUpVariant} className="text-[#F5F5F0] mb-6"
+            style={{
+              fontFamily: 'var(--font-editorial)',
+              fontStyle: 'italic',
+              fontWeight: 300,
+              fontSize: 'clamp(3rem, 7vw, 7rem)',
+              letterSpacing: '0.02em',
+              lineHeight: 0.9,
+            }}>
+            Tempo Elevado<br />
+            <em>à Arte</em>
           </motion.h2>
-          <motion.p variants={fadeUpVariant} className="text-[#F5F5F0]/40 text-lg max-w-lg mx-auto">
+          <motion.p variants={fadeUpVariant} className="text-[#F5F5F0]/40 max-w-lg mx-auto tracking-widest"
+            style={{ fontFamily: 'var(--font-ui)', fontWeight: 300, fontSize: '0.85rem', letterSpacing: '0.12em' }}>
             Cada mecanismo, uma sinfonia. Cada mostrador, uma tela. Peças que transcendem gerações.
           </motion.p>
         </motion.div>

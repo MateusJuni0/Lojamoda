@@ -22,7 +22,7 @@ export default function CartDrawer() {
       {cartOpen && (
         <>
           <motion.div ref={overlayRef} variants={backdropVariants} initial="hidden" animate="visible" exit="exit"
-            onClick={() => closeCart()} className="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm" />
+            onClick={() => closeCart()} className="fixed inset-0 z-50 bg-black/75" />
 
           <motion.aside
             variants={cartDrawerVariants} initial="hidden" animate="visible" exit="exit"
@@ -50,7 +50,7 @@ export default function CartDrawer() {
               ) : (
                 items.map((item) => (
                   <motion.div key={item.id} layout initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: 20 }}
-                    className="flex gap-4 p-3 rounded-xl bg-white/3 border border-white/5">
+                    className="flex gap-4 p-3 rounded-xl bg-[#111] border border-white/10">
                     <div className="relative w-20 h-24 rounded-lg overflow-hidden flex-shrink-0 bg-white/5">
                       <Image src={item.product.images[0] ?? ''} alt={item.product.name} fill className="object-cover" sizes="80px" />
                     </div>

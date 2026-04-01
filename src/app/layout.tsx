@@ -1,20 +1,29 @@
 import type { Metadata } from 'next'
-import { Inter, Playfair_Display } from 'next/font/google'
+import { Cormorant_Garamond, DM_Sans, DM_Mono } from 'next/font/google'
 import './globals.css'
 import Header from '@/components/layout/Header/Header'
 import Footer from '@/components/layout/Footer/Footer'
 import CartDrawer from '@/components/layout/CartDrawer/CartDrawer'
 import { ToastContainer } from '@/components/ui/Toast'
 
-const inter = Inter({
+const cormorant = Cormorant_Garamond({
   subsets: ['latin'],
-  variable: '--font-inter',
+  weight: ['300', '400', '500', '600'],
+  variable: '--font-cormorant',
   display: 'swap',
 })
 
-const playfair = Playfair_Display({
+const dmSans = DM_Sans({
   subsets: ['latin'],
-  variable: '--font-playfair',
+  weight: ['300', '400', '500'],
+  variable: '--font-dm-sans',
+  display: 'swap',
+})
+
+const dmMono = DM_Mono({
+  subsets: ['latin'],
+  weight: ['400'],
+  variable: '--font-dm-mono',
   display: 'swap',
 })
 
@@ -46,7 +55,7 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="pt" className={`${inter.variable} ${playfair.variable}`}>
+    <html lang="pt" className={`${cormorant.variable} ${dmSans.variable} ${dmMono.variable}`}>
       <body className="bg-[#0A0A0A] text-[#F5F5F0] font-sans antialiased">
         <Header />
         <CartDrawer />

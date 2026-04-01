@@ -40,9 +40,10 @@
   --color-warning: #D4A017;
 
   /* --- Fonts --- */
-  --font-sans: 'Inter', 'Helvetica Neue', system-ui, sans-serif;
-  --font-serif: 'Playfair Display', Georgia, serif;
-  --font-mono: 'JetBrains Mono', monospace;
+  --font-sans: var(--font-dm-sans), 'Helvetica Neue', system-ui, sans-serif;
+  --font-serif: var(--font-cormorant), Georgia, serif;
+  --font-display: var(--font-cormorant), Georgia, serif;
+  --font-mono: var(--font-dm-mono), monospace;
 
   /* --- Shadows --- */
   --shadow-sm: 0 2px 8px rgba(0,0,0,0.35);
@@ -63,6 +64,51 @@
   --section-y-mobile: 48px;
   --section-y-desktop: 80px;
   --section-y-luxury: 120px;
+}
+
+/* ============================================================
+   EDITORIAL TYPOGRAPHY VARS (usáveis via inline styles)
+   ============================================================ */
+:root {
+  --font-editorial: var(--font-cormorant), Georgia, serif;
+  --font-ui: var(--font-dm-sans), system-ui, sans-serif;
+
+  --font-size-hero: clamp(3.5rem, 8vw, 9rem);
+  --font-size-display: clamp(2rem, 4vw, 5rem);
+  --font-size-product-name: clamp(1.5rem, 2.5vw, 2.5rem);
+  --font-weight-editorial: 300;
+  --letter-spacing-luxury: 0.08em;
+
+  /* Theme vars — dark defaults */
+  --background: #0A0A0A;
+  --surface: #111111;
+  --surface-elevated: #1A1A1A;
+  --border: rgba(255,255,255,0.08);
+  --text-primary: #F5F5F0;
+  --text-secondary: #A0A09A;
+  --accent-gold: #D4AF37;
+}
+
+/* Modo Editorial (roupas/acessórios) */
+.theme-editorial {
+  --background: #F8F6F1;       /* Alabaster */
+  --surface: #FFFFFF;
+  --surface-elevated: #F0EDE6;
+  --border: rgba(0,0,0,0.08);
+  --text-primary: #1A1A1A;
+  --text-secondary: #6B6B6B;
+  --accent-gold: #8B6914;      /* ouro mais escuro sobre fundo claro */
+}
+
+/* Dark mode (relógios) */
+.theme-dark {
+  --background: #0A0A0A;
+  --surface: #111111;
+  --surface-elevated: #1A1A1A;
+  --border: rgba(255,255,255,0.08);
+  --text-primary: #FAFAFA;
+  --text-secondary: #A0A09A;
+  --accent-gold: #D4AF37;
 }
 
 /* ============================================================
