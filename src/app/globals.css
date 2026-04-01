@@ -1,0 +1,268 @@
+@import "tailwindcss";
+
+/* ============================================================
+   DESIGN TOKENS — LOJA MODA PREMIUM
+   ============================================================ */
+@theme {
+  /* --- Backgrounds --- */
+  --color-bg: #0A0A0A;
+  --color-surface: #111111;
+  --color-elevated: #1A1A1A;
+  --color-glass: rgba(255,255,255,0.04);
+  --color-glass-hover: rgba(255,255,255,0.08);
+
+  /* --- Text --- */
+  --color-text: #F5F5F0;
+  --color-text-muted: #A0A09A;
+  --color-text-faint: #5A5A56;
+  --color-text-inverted: #0A0A0A;
+
+  /* --- Borders --- */
+  --color-border: rgba(255,255,255,0.08);
+  --color-border-medium: rgba(255,255,255,0.15);
+  --color-border-strong: rgba(255,255,255,0.30);
+
+  /* --- Gold --- */
+  --color-gold: #D4AF37;
+  --color-gold-light: #F5D179;
+  --color-gold-dark: #B8941F;
+  --color-gold-50: rgba(212,175,55,0.05);
+  --color-gold-10: rgba(212,175,55,0.1);
+  --color-gold-20: rgba(212,175,55,0.2);
+
+  /* --- Silver & Rose Gold --- */
+  --color-silver: #A8A8A8;
+  --color-rosegold: #C9956C;
+
+  /* --- Feedback --- */
+  --color-success: #2D7A4F;
+  --color-error: #C0392B;
+  --color-warning: #D4A017;
+
+  /* --- Fonts --- */
+  --font-sans: 'Inter', 'Helvetica Neue', system-ui, sans-serif;
+  --font-serif: 'Playfair Display', Georgia, serif;
+  --font-mono: 'JetBrains Mono', monospace;
+
+  /* --- Shadows --- */
+  --shadow-sm: 0 2px 8px rgba(0,0,0,0.35);
+  --shadow-md: 0 4px 16px rgba(0,0,0,0.4), 0 1px 4px rgba(0,0,0,0.3);
+  --shadow-lg: 0 8px 32px rgba(0,0,0,0.45), 0 2px 8px rgba(0,0,0,0.3);
+  --shadow-xl: 0 20px 60px rgba(0,0,0,0.5), 0 4px 16px rgba(0,0,0,0.3);
+  --shadow-gold: 0 0 40px rgba(212,175,55,0.15);
+  --shadow-gold-hover: 0 0 60px rgba(212,175,55,0.3);
+  --shadow-glass: inset 0 1px 0 rgba(255,255,255,0.1), 0 4px 24px rgba(0,0,0,0.4);
+
+  /* --- Easing --- */
+  --ease-luxury: cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  --ease-standard: cubic-bezier(0.4, 0, 0.2, 1);
+  --ease-decelerate: cubic-bezier(0, 0, 0.2, 1);
+  --ease-accelerate: cubic-bezier(0.4, 0, 1, 1);
+
+  /* --- Spacing Section --- */
+  --section-y-mobile: 48px;
+  --section-y-desktop: 80px;
+  --section-y-luxury: 120px;
+}
+
+/* ============================================================
+   BASE STYLES
+   ============================================================ */
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  background-color: #0A0A0A;
+  color: #F5F5F0;
+  font-family: var(--font-sans);
+  line-height: 1.5;
+  overflow-x: hidden;
+}
+
+/* ============================================================
+   TYPOGRAPHY — DUAL SYSTEM
+   ============================================================ */
+[data-product-type="WATCH"] h1,
+[data-product-type="WATCH"] h2,
+[data-product-type="WATCH"] h3,
+[data-tier="premium"] h1,
+[data-tier="premium"] h2,
+.font-luxury h1,
+.font-luxury h2,
+.font-luxury h3 {
+  font-family: var(--font-serif);
+  font-weight: 400;
+}
+
+/* ============================================================
+   SHIMMER / SKELETON ANIMATION
+   ============================================================ */
+@keyframes shimmer {
+  0%   { background-position: -200% 0; }
+  100% { background-position:  200% 0; }
+}
+
+.skeleton {
+  background: linear-gradient(
+    90deg,
+    #1A1A1A 25%,
+    #252525 50%,
+    #1A1A1A 75%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 1.8s ease-in-out infinite;
+}
+
+/* ============================================================
+   GOLD GLOW PULSE
+   ============================================================ */
+@keyframes gold-pulse {
+  0%, 100% { opacity: 0.1; }
+  50%       { opacity: 0.2; }
+}
+
+.gold-glow-pulse {
+  animation: gold-pulse 3s ease-in-out infinite;
+}
+
+/* ============================================================
+   NAV LINK UNDERLINE (CSS-only, performant)
+   ============================================================ */
+.nav-link {
+  position: relative;
+}
+.nav-link::after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  width: 100%;
+  height: 1px;
+  background: #D4AF37;
+  transform: scaleX(0);
+  transform-origin: right;
+  transition: transform 300ms var(--ease-standard);
+}
+.nav-link:hover::after {
+  transform: scaleX(1);
+  transform-origin: left;
+}
+
+/* ============================================================
+   GLASSMORPHISM
+   ============================================================ */
+.glass-card {
+  background: rgba(255, 255, 255, 0.04);
+  backdrop-filter: blur(20px) saturate(150%);
+  -webkit-backdrop-filter: blur(20px) saturate(150%);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.10),
+    0 8px 32px rgba(0, 0, 0, 0.4);
+}
+
+.glass-gold {
+  background: rgba(212, 175, 55, 0.06);
+  backdrop-filter: blur(16px);
+  border: 1px solid rgba(212, 175, 55, 0.20);
+  box-shadow:
+    inset 0 1px 0 rgba(212, 175, 55, 0.15),
+    0 0 40px rgba(212, 175, 55, 0.08);
+}
+
+.header-glass {
+  background: rgba(10, 10, 10, 0.85);
+  backdrop-filter: blur(20px) saturate(120%);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+/* ============================================================
+   PRODUCT CARD — IMAGE SWAP
+   ============================================================ */
+.card-image-secondary {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  transition: opacity 400ms ease;
+}
+.group:hover .card-image-secondary,
+.card:hover .card-image-secondary {
+  opacity: 1;
+}
+
+/* ============================================================
+   SCROLLBAR
+   ============================================================ */
+::-webkit-scrollbar {
+  width: 6px;
+}
+::-webkit-scrollbar-track {
+  background: #0A0A0A;
+}
+::-webkit-scrollbar-thumb {
+  background: #2A2A2A;
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #3A3A3A;
+}
+
+/* ============================================================
+   FOCUS VISIBLE — ACCESSIBILITY
+   ============================================================ */
+:focus-visible {
+  outline: 2px solid #D4AF37;
+  outline-offset: 2px;
+}
+
+/* ============================================================
+   PRICE DISPLAY
+   ============================================================ */
+.price-compare {
+  text-decoration: line-through;
+  color: #5A5A56;
+}
+
+/* ============================================================
+   RANGE SLIDER
+   ============================================================ */
+input[type="range"] {
+  -webkit-appearance: none;
+  width: 100%;
+  height: 2px;
+  background: rgba(255,255,255,0.15);
+  border-radius: 2px;
+  outline: none;
+}
+input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: #D4AF37;
+  cursor: pointer;
+  transition: transform 0.15s ease;
+}
+input[type="range"]::-webkit-slider-thumb:hover {
+  transform: scale(1.2);
+}
+
+/* ============================================================
+   REDUCED MOTION
+   ============================================================ */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}

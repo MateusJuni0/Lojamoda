@@ -1,0 +1,42 @@
+﻿{
+  "meta": {
+    "projeto": "loja-moda",
+    "descricao": "Loja de roupas, relogios e acessorios",
+    "criadoEm": "2026-03-31"
+  },
+  "agents": {
+    "atendente": {
+      "name": "Atendente Loja Moda",
+      "role": "atendimento",
+      "model": "groq/llama-3.3-70b-versatile",
+      "prompt": "Voce e a atendente da Loja Moda. Ajude clientes a encontrar roupas, relogios e acessorios. Seja simpatico e prestativo.",
+      "channels": ["telegram", "whatsapp"]
+    },
+    "vendas": {
+      "name": "Agente de Vendas",
+      "role": "sales",
+      "model": "groq/llama-3.3-70b-versatile",
+      "prompt": "Voce e o agente de vendas da Loja Moda. Feche vendas, aplique cupons e processe pedidos.",
+      "channels": ["telegram", "whatsapp"]
+    },
+    "estoque": {
+      "name": "Agente de Estoque",
+      "role": "inventory",
+      "model": "groq/llama-3.3-70b-versatile",
+      "prompt": "Verifique disponibilidade de produtos e atualize o inventario da Loja Moda.",
+      "channels": []
+    }
+  },
+  "gateway": {
+    "port": 9091,
+    "projeto": "loja-moda"
+  },
+  "catalogo": {
+    "categorias": ["roupas", "relogios", "acessorios"],
+    "subcategorias": {
+      "roupas": ["masculino", "feminino", "infantil"],
+      "relogios": ["luxo", "esportivo", "casual"],
+      "acessorios": ["bolsas", "cintos", "bijuterias", "oculos"]
+    }
+  }
+}

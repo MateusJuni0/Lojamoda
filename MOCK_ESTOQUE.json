@@ -1,0 +1,21 @@
+﻿{
+  "projeto": "loja-moda",
+  "estoque": {
+    "roupas": [
+      { "id": "R001", "nome": "Camiseta Basic", "categoria": "masculino", "tamanhos": ["P","M","G","GG"], "preco": 59.90, "estoque": 50 },
+      { "id": "R002", "nome": "Vestido Floral", "categoria": "feminino", "tamanhos": ["P","M","G"], "preco": 129.90, "estoque": 30 },
+      { "id": "R003", "nome": "Calca Jeans Slim", "categoria": "masculino", "tamanhos": ["38","40","42","44"], "preco": 189.90, "estoque": 25 }
+    ],
+    "relogios": [
+      { "id": "W001", "nome": "Relogio Esportivo Pro", "categoria": "esportivo", "preco": 299.90, "estoque": 15 },
+      { "id": "W002", "nome": "Relogio Classico Gold", "categoria": "luxo", "preco": 899.90, "estoque": 8 },
+      { "id": "W003", "nome": "Relogio Casual Minimalista", "categoria": "casual", "preco": 199.90, "estoque": 20 }
+    ],
+    "acessorios": [
+      { "id": "A001", "nome": "Bolsa Couro Feminina", "categoria": "bolsas", "preco": 249.90, "estoque": 12 },
+      { "id": "A002", "nome": "Cinto Couro Masculino", "categoria": "cintos", "preco": 89.90, "estoque": 35 },
+      { "id": "A003", "nome": "Oculos de Sol Polarizado", "categoria": "oculos", "preco": 159.90, "estoque": 18 }
+    ]
+  },
+  "atualizadoEm": "2026-03-31"
+}
