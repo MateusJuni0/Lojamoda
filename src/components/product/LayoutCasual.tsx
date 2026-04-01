@@ -3,12 +3,13 @@
 import { useState } from 'react'
 import Image from 'next/image'
 import { motion, AnimatePresence } from 'framer-motion'
-import { Heart, ShoppingBag, Share2, ChevronDown, ChevronLeft, ChevronRight } from 'lucide-react'
+import { Heart, ShoppingBag, Share2, ChevronDown, ChevronLeft, ChevronRight, ShieldCheck, Truck, RotateCcw } from 'lucide-react'
 import { type ApparelProduct, type AccessoryProduct, type SizeVariant } from '@/types/product'
 import { useCartStore } from '@/store/cartStore'
 import { useWishlistStore } from '@/store/wishlistStore'
 import { useUIStore } from '@/store/uiStore'
 import { StockBadge } from '@/components/ui/Badge'
+import ScarcityBadge from '@/components/ui/ScarcityBadge'
 import { formatPrice } from '@/lib/utils'
 import { cn } from '@/lib/utils'
 import { fadeUpVariant, staggerContainerCasual } from '@/lib/animations'
@@ -57,12 +58,18 @@ export default function LayoutCasual({ product }: LayoutCasualProps) {
           ...(product.weight ? [{ label: 'Peso', value: product.weight }] : []),
         ]
 
+  const accordionSections = [
+    { key: 'detalhes', label: 'Detalhes' },
+    { key: 'descricao', label: 'Descrição' },
+    { key: 'envio', label: 'Envio e Devoluções' },
+  ]
+
   return (
     <div className="min-h-screen pt-20">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 xl:gap-20">
 
-          {/* Image gallery */}
+          {/* Galeria de imagens */}
           <motion.div variants={staggerContainerCasual} initial="hidden" animate="visible" className="space-y-3">
             <div className="relative aspect-[3/4] rounded-2xl overflow-hidden bg-white/5 group">
               <AnimatePresence mode="wait">
@@ -99,7 +106,7 @@ export default function LayoutCasual({ product }: LayoutCasualProps) {
             )}
           </motion.div>
 
-          {/* Product info */}
+          {/* Informação do produto */}
           <motion.div variants={staggerContainerCasual} initial="hidden" animate="visible" className="space-y-6">
             <motion.div variants={fadeUpVariant}>
               <p className="text-[#D4AF37] text-xs tracking-widest uppercase mb-1">{product.category}</p>
@@ -114,7 +121,12 @@ export default function LayoutCasual({ product }: LayoutCasualProps) {
 
             <motion.p variants={fadeUpVariant} className="text-[#F5F5F0]/60 leading-relaxed">{product.shortDesc}</motion.p>
 
-            {/* Color selector */}
+            {/* Scarcity badge */}
+            <motion.div variants={fadeUpVariant}>
+              <ScarcityBadge stock={product.stock} slug={product.slug} />
+            </motion.div>
+
+            {/* Seletor de cor */}
             {product.colorVariants && product.colorVariants.length > 0 && (
               <motion.div variants={fadeUpVariant}>
                 <p className="text-[#F5F5F0]/70 text-sm mb-2">Cor: <span className="text-[#F5F5F0]">{selectedColor}</span></p>
@@ -129,7 +141,7 @@ export default function LayoutCasual({ product }: LayoutCasualProps) {
               </motion.div>
             )}
 
-            {/* Size selector */}
+            {/* Seletor de tamanho */}
             {sizes.length > 0 && (
               <motion.div variants={fadeUpVariant}>
                 <p className="text-[#F5F5F0]/70 text-sm mb-2">Tamanho</p>
@@ -147,7 +159,7 @@ export default function LayoutCasual({ product }: LayoutCasualProps) {
               </motion.div>
             )}
 
-            {/* Actions */}
+            {/* Ações */}
             <motion.div variants={fadeUpVariant} className="flex gap-3 pt-2">
               <button onClick={handleAddToCart} disabled={!product.inStock}
                 className={cn('flex-1 flex items-center justify-center gap-2 py-4 rounded-xl text-sm font-bold tracking-widest uppercase transition-colors',
@@ -166,12 +178,28 @@ export default function LayoutCasual({ product }: LayoutCasualProps) {
               </button>
             </motion.div>
 
+            {/* Trust row */}
+            <motion.div variants={fadeUpVariant}
+              className="flex items-center justify-between gap-2 py-3 px-4 rounded-xl bg-white/[0.03] border border-white/[0.08] text-[#F5F5F0]/50 text-xs">
+              <span className="flex items-center gap-1.5">
+                <ShieldCheck size={13} className="text-[#D4AF37]" />
+                Compra Segura
+              </span>
+              <span className="text-white/10">|</span>
+              <span className="flex items-center gap-1.5">
+                <Truck size={13} className="text-[#D4AF37]" />
+                Entrega 2–4 dias
+              </span>
+              <span className="text-white/10">|</span>
+              <span className="flex items-center gap-1.5">
+                <RotateCcw size={13} className="text-[#D4AF37]" />
+                30 dias grátis
+              </span>
+            </motion.div>
+
             {/* Accordion */}
             <motion.div variants={fadeUpVariant} className="border-t border-white/10 pt-6 space-y-3">
-              {[
-                { key: 'detalhes', label: 'Detalhes' },
-                { key: 'descricao', label: 'Descrição' },
-              ].map((section) => (
+              {accordionSections.map((section) => (
                 <div key={section.key} className="border-b border-white/10 pb-3">
                   <button onClick={() => toggleSection(section.key)}
                     className="flex items-center justify-between w-full py-2 text-[#F5F5F0]/80 hover:text-[#F5F5F0] text-sm font-medium transition-colors">
@@ -189,6 +217,39 @@ export default function LayoutCasual({ product }: LayoutCasualProps) {
                               <span>{d.value}</span>
                             </div>
                           ))}
+                          {section.key === 'envio' && (
+                            <div className="space-y-2.5">
+                              <div className="flex gap-2">
+                                <span className="w-4 flex-shrink-0">📦</span>
+                                <div>
+                                  <p className="text-[#F5F5F0]/70 font-medium">Envio Standard</p>
+                                  <p className="text-[#F5F5F0]/40">2–4 dias úteis · Gratuito acima de €69 · €4,99 abaixo</p>
+                                </div>
+                              </div>
+                              <div className="flex gap-2">
+                                <span className="w-4 flex-shrink-0">⚡</span>
+                                <div>
+                                  <p className="text-[#F5F5F0]/70 font-medium">Envio Expresso</p>
+                                  <p className="text-[#F5F5F0]/40">24h · €9,99</p>
+                                </div>
+                              </div>
+
+                              <div className="flex gap-2">
+                                <span className="w-4 flex-shrink-0">↩️</span>
+                                <div>
+                                  <p className="text-[#F5F5F0]/70 font-medium">Devoluções</p>
+                                  <p className="text-[#F5F5F0]/40">30 dias · Gratuitas · Sem justificação</p>
+                                </div>
+                              </div>
+                              <div className="flex gap-2">
+                                <span className="w-4 flex-shrink-0">🔄</span>
+                                <div>
+                                  <p className="text-[#F5F5F0]/70 font-medium">Troca de Tamanho</p>
+                                  <p className="text-[#F5F5F0]/40">Gratuita na primeira troca</p>
+                                </div>
+                              </div>
+                            </div>
+                          )}
                         </div>
                       </motion.div>
                     )}

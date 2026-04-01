@@ -3,12 +3,13 @@
 import { useState, useRef } from 'react'
 import Image from 'next/image'
 import { motion, useScroll, useTransform, AnimatePresence } from 'framer-motion'
-import { Heart, ShoppingBag, Share2, Award, Clock } from 'lucide-react'
+import { Heart, ShoppingBag, Share2, Award, Clock, ShieldCheck, Truck, RotateCcw, ChevronDown, BadgeCheck } from 'lucide-react'
 import { type WatchProduct } from '@/types/product'
 import { useCartStore } from '@/store/cartStore'
 import { useWishlistStore } from '@/store/wishlistStore'
 import { useUIStore } from '@/store/uiStore'
 import { StockBadge } from '@/components/ui/Badge'
+import ScarcityBadge from '@/components/ui/ScarcityBadge'
 import { formatPrice } from '@/lib/utils'
 import { cn } from '@/lib/utils'
 import { fadeUpVariant, staggerContainerLuxury } from '@/lib/animations'
@@ -20,6 +21,7 @@ interface LayoutLuxuryProps {
 export default function LayoutLuxury({ product }: LayoutLuxuryProps) {
   const [activeImage, setActiveImage] = useState(0)
   const [selectedColor, setSelectedColor] = useState(product.colorVariants?.[0]?.name ?? '')
+  const [expandedSection, setExpandedSection] = useState<string | null>(null)
   const heroRef = useRef<HTMLDivElement>(null)
   const { scrollYProgress } = useScroll({ target: heroRef, offset: ['start start', 'end start'] })
   const imageScale = useTransform(scrollYProgress, [0, 1], [1, 1.08])
@@ -36,6 +38,8 @@ export default function LayoutLuxury({ product }: LayoutLuxuryProps) {
     openCart()
   }
 
+  const toggleSection = (s: string) => setExpandedSection(expandedSection === s ? null : s)
+
   const specs = [
     { label: 'Referência', value: product.reference },
     { label: 'Movimento', value: product.movement },
@@ -49,7 +53,7 @@ export default function LayoutLuxury({ product }: LayoutLuxuryProps) {
 
   return (
     <div className="min-h-screen bg-[#080808]">
-      {/* Hero */}
+      {/* Hero com parallax */}
       <div ref={heroRef} className="relative h-[70vh] md:h-screen overflow-hidden pt-20">
         <motion.div style={{ scale: imageScale, opacity: imageOpacity }} className="absolute inset-0">
           <Image src={product.images[0] ?? ''} alt={product.name} fill priority sizes="100vw" className="object-cover object-center" />
@@ -70,10 +74,10 @@ export default function LayoutLuxury({ product }: LayoutLuxuryProps) {
         </motion.div>
       </div>
 
-      {/* Content */}
+      {/* Conteúdo */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-16">
-          {/* Gallery + story */}
+          {/* Galeria + história */}
           <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={staggerContainerLuxury} className="space-y-8">
             <motion.div variants={fadeUpVariant} className="flex gap-3 overflow-x-auto pb-2">
               {product.images.map((img, i) => (
@@ -99,14 +103,19 @@ export default function LayoutLuxury({ product }: LayoutLuxuryProps) {
                   <Clock size={16} className="text-[#D4AF37]" />
                   <span className="text-[#D4AF37] text-xs tracking-widest uppercase">A História</span>
                 </div>
-                <p className="text-[#F5F5F0]/60 leading-relaxed text-sm italic">"{product.story}"</p>
+                <p className="text-[#F5F5F0]/60 leading-relaxed text-sm italic">&quot;{product.story}&quot;</p>
               </motion.div>
             )}
           </motion.div>
 
-          {/* Purchase panel */}
+          {/* Painel de compra */}
           <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={staggerContainerLuxury} className="space-y-8">
             <motion.p variants={fadeUpVariant} className="text-[#F5F5F0]/60 leading-relaxed text-lg">{product.shortDesc}</motion.p>
+
+            {/* Scarcity badge */}
+            <motion.div variants={fadeUpVariant}>
+              <ScarcityBadge stock={product.stock} slug={product.slug} />
+            </motion.div>
 
             {product.colorVariants && product.colorVariants.length > 0 && (
               <motion.div variants={fadeUpVariant}>
@@ -124,6 +133,7 @@ export default function LayoutLuxury({ product }: LayoutLuxuryProps) {
               </motion.div>
             )}
 
+            {/* Ações */}
             <motion.div variants={fadeUpVariant} className="flex gap-3">
               <button onClick={handleAddToCart} disabled={!product.inStock}
                 className={cn('flex-1 flex items-center justify-center gap-2 py-4 rounded-xl text-sm font-bold tracking-widest uppercase transition-colors',
@@ -142,6 +152,38 @@ export default function LayoutLuxury({ product }: LayoutLuxuryProps) {
               </button>
             </motion.div>
 
+            {/* Trust row */}
+            <motion.div variants={fadeUpVariant}
+              className="flex items-center justify-between gap-2 py-3 px-4 rounded-xl bg-white/[0.03] border border-white/[0.08] text-[#F5F5F0]/50 text-xs">
+              <span className="flex items-center gap-1.5">
+                <ShieldCheck size={13} className="text-[#D4AF37]" />
+                Compra Segura
+              </span>
+              <span className="text-white/10">|</span>
+              <span className="flex items-center gap-1.5">
+                <Truck size={13} className="text-[#D4AF37]" />
+                Entrega 2–4 dias
+              </span>
+              <span className="text-white/10">|</span>
+              <span className="flex items-center gap-1.5">
+                <RotateCcw size={13} className="text-[#D4AF37]" />
+                30 dias grátis
+              </span>
+            </motion.div>
+
+            {/* Editorial Proof — exclusivo relógios */}
+            <motion.div variants={fadeUpVariant} className="glass-card rounded-2xl p-6 border border-[#D4AF37]/15">
+              <div className="flex items-center gap-2 mb-4">
+                <BadgeCheck size={16} className="text-[#D4AF37]" />
+                <span className="text-[#D4AF37] text-xs tracking-widest uppercase">Garantia de Qualidade</span>
+              </div>
+              <p className="text-[#F5F5F0]/60 text-sm leading-relaxed">
+                Cada relógio passa por inspeção de qualidade de 48h antes de ser enviado.
+                Garantia de 2 anos incluída. Certificado de autenticidade digital.
+              </p>
+            </motion.div>
+
+            {/* Especificações */}
             <motion.div variants={fadeUpVariant} className="glass-card rounded-2xl p-6">
               <div className="flex items-center gap-2 mb-4">
                 <Award size={16} className="text-[#D4AF37]" />
@@ -159,6 +201,54 @@ export default function LayoutLuxury({ product }: LayoutLuxuryProps) {
 
             <motion.div variants={fadeUpVariant}>
               <p className="text-[#F5F5F0]/40 leading-relaxed text-sm">{product.description}</p>
+            </motion.div>
+
+            {/* Accordion Envio e Devoluções */}
+            <motion.div variants={fadeUpVariant} className="border-t border-white/10 pt-6">
+              <div className="border-b border-white/10 pb-3">
+                <button onClick={() => toggleSection('envio')}
+                  className="flex items-center justify-between w-full py-2 text-[#F5F5F0]/80 hover:text-[#F5F5F0] text-sm font-medium transition-colors">
+                  Envio e Devoluções
+                  <ChevronDown size={16} className={cn('transition-transform', expandedSection === 'envio' && 'rotate-180')} />
+                </button>
+                <AnimatePresence>
+                  {expandedSection === 'envio' && (
+                    <motion.div initial={{ height: 0, opacity: 0 }} animate={{ height: 'auto', opacity: 1 }} exit={{ height: 0, opacity: 0 }} transition={{ duration: 0.2 }} className="overflow-hidden">
+                      <div className="pb-3 text-[#F5F5F0]/50 text-sm space-y-2.5">
+                        <div className="flex gap-2">
+                          <span className="w-4 flex-shrink-0">📦</span>
+                          <div>
+                            <p className="text-[#F5F5F0]/70 font-medium">Envio Standard</p>
+                            <p className="text-[#F5F5F0]/40">2–4 dias úteis · Gratuito acima de €69 · €4,99 abaixo</p>
+                          </div>
+                        </div>
+
+                        <div className="flex gap-2">
+                          <span className="w-4 flex-shrink-0">⚡</span>
+                          <div>
+                            <p className="text-[#F5F5F0]/70 font-medium">Envio Expresso</p>
+                            <p className="text-[#F5F5F0]/40">24h · €9,99</p>
+                          </div>
+                        </div>
+                        <div className="flex gap-2">
+                          <span className="w-4 flex-shrink-0">↩️</span>
+                          <div>
+                            <p className="text-[#F5F5F0]/70 font-medium">Devoluções</p>
+                            <p className="text-[#F5F5F0]/40">30 dias · Gratuitas · Sem justificação</p>
+                          </div>
+                        </div>
+                        <div className="flex gap-2">
+                          <span className="w-4 flex-shrink-0">🔄</span>
+                          <div>
+                            <p className="text-[#F5F5F0]/70 font-medium">Troca de Tamanho</p>
+                            <p className="text-[#F5F5F0]/40">Gratuita na primeira troca</p>
+                          </div>
+                        </div>
+                      </div>
+                    </motion.div>
+                  )}
+                </AnimatePresence>
+              </div>
             </motion.div>
           </motion.div>
         </div>
