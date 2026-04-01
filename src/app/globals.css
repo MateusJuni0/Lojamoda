@@ -91,9 +91,9 @@
 
 /* Modo Editorial (roupas/acessórios) */
 .theme-editorial {
-  --background: #EDE8DF;       /* Warm linen */
+  --background: #E8E0D5;       /* Bege linho quente */
   --surface: #FFFFFF;
-  --surface-elevated: #F0EDE6;
+  --surface-elevated: #EDE8DF;
   --border: rgba(0,0,0,0.08);
   --text-primary: #1A1A1A;
   --text-secondary: #6B6B6B;
